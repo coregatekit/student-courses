@@ -3,3 +3,17 @@
 ###
 GET {{host}}/health
 Content-Type: application/json
+
+####################
+# Students
+####################
+POST {{host}}/students HTTP/1.1
+Content-Type: application/json
+
+{
+    "first_name": "Joe",
+    "last_name": "Kim",
+    "gender": "Male",
+    "email": "joekim@coregate.dev",
+    "phone_number": "0647951994"
+}
