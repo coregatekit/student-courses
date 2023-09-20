@@ -1,0 +1,5 @@
+@host = http://localhost:3090/api
+
+###
+GET {{host}}/health
+Content-Type: application/json
