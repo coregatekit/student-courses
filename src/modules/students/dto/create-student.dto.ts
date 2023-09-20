@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Gender } from '@prisma/client';
 import {
+  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -28,6 +29,7 @@ export class CreateStudentDto {
 
   @IsString()
   @IsNotEmpty()
+  @IsEmail()
   @MaxLength(100)
   @ApiProperty({ required: true })
   email: string;
