@@ -24,8 +24,8 @@ export class StudentsService {
     return await this.prismaService.students.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} student`;
+  async findOne(id: number): Promise<Student> {
+    return await this.prismaService.students.findFirst({ where: { id } });
   }
 
   update(id: number, updateStudentDto: UpdateStudentDto) {
