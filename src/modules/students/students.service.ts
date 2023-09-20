@@ -20,8 +20,8 @@ export class StudentsService {
     });
   }
 
-  findAll() {
-    return `This action returns all students`;
+  async findAll(): Promise<Student[]> {
+    return await this.prismaService.students.findMany();
   }
 
   findOne(id: number) {
