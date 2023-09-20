@@ -3,19 +3,24 @@ import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { PrismaService } from 'src/databases/prisma/prisma.service';
 import { Student } from './models/student.model';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class StudentsService {
-  currentRunNumber = 1;
-  year = 59;
+  private studentYear: number;
 
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private readonly configService: ConfigService,
+  ) {
+    this.studentYear = this.configService.get<number>('CURRENT_STUDENT_YEAR');
+  }
 
   async create(createStudentDto: CreateStudentDto): Promise<Student> {
     return await this.prismaService.students.create({
       data: {
         ...createStudentDto,
-        code: this.generateStudentCode(),
+        code: await this.generateStudentCode(),
       },
     });
   }
@@ -37,15 +42,22 @@ export class StudentsService {
     });
   }
 
-  generateStudentCode(): string {
+  async generateStudentCode(): Promise<string> {
+    const runNumber = await this.prismaService.student_runnumber.findFirst({
+      where: { id: 1 },
+    });
+    let currentRunNumber: number = runNumber.current_number;
     // Generate the student code by combining the run number and a constant prefix
-    const studentCode = `B${this.year}${this.currentRunNumber
+    const studentCode = `B${this.studentYear}${currentRunNumber
       .toString()
       .padStart(5, '0')}`;
+    currentRunNumber++;
 
     // Increment the run number for the next student
-    this.currentRunNumber++;
-
+    await this.prismaService.student_runnumber.update({
+      where: { id: 1 },
+      data: { current_number: currentRunNumber },
+    });
     return studentCode;
   }
 }
