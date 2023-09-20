@@ -28,12 +28,13 @@ export class StudentsService {
     return await this.prismaService.students.findFirst({ where: { id } });
   }
 
-  update(id: number, updateStudentDto: UpdateStudentDto) {
-    return `This action updates a #${id} student`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} student`;
+  async update(id: number, updateStudentDto: UpdateStudentDto) {
+    return await this.prismaService.students.update({
+      where: {
+        id,
+      },
+      data: updateStudentDto,
+    });
   }
 
   generateStudentCode(): string {
