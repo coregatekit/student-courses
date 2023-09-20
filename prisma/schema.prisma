@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+model students {
+  id               Int                @id @default(autoincrement())
+  code             String             @unique @db.VarChar(8)
+  first_name       String             @db.VarChar(100)
+  last_name        String             @db.VarChar(100)
+  gender           Gender
+  email            String             @db.VarChar(100)
+  phone_number     String             @db.VarChar(10)
+  bio              String?
+  students_courses students_courses[]
+
+  @@index([code, first_name])
+}
+
+model teachers {
+  id               Int                @id @default(autoincrement())
+  code             String             @unique @db.VarChar(8)
+  first_name       String             @db.VarChar(100)
+  last_name        String             @db.VarChar(100)
+  gender           Gender
+  email            String?            @db.VarChar(100)
+  phone_number     String?            @db.VarChar(10)
+  bio              String?
+  courses          courses[]
+  students_courses students_courses[]
+
+  @@index([code, first_name])
+}
+
+model courses {
+  id         Int      @id @default(autoincrement())
+  code       String   @unique @db.VarChar(6)
+  name       String   @db.VarChar(150)
+  teacher    teachers @relation(fields: [teacher_id], references: [id])
+  teacher_id Int
+
+  @@index([code, name])
+}
+
+model students_courses {
+  id         Int      @id
+  student    students @relation(fields: [student_id], references: [id])
+  student_id Int
+  teacher    teachers @relation(fields: [teacher_id], references: [id])
+  teacher_id Int
+  pass       Boolean  @default(false)
+  point      Int      @default(0)
+
+  @@index([student_id, teacher_id])
+}
