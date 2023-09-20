@@ -65,3 +65,8 @@ model students_courses {
 
   @@index([student_id, teacher_id])
 }
+
+model student_runnumber {
+  id             Int @id
+  current_number Int
+}
