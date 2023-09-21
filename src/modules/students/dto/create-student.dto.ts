@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Gender } from '@prisma/client';
+import { Type } from 'class-transformer';
 import {
-  IsDate,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -29,7 +29,7 @@ export class CreateStudentDto {
   gender: Gender;
 
   @IsNotEmpty()
-  @IsDate()
+  @Type(() => Date)
   @ApiProperty({ required: true })
   birth_date: Date;
 
