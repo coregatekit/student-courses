@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Gender } from '@prisma/client';
 import {
+  IsDate,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -26,6 +27,11 @@ export class CreateTeacherDto {
   @IsNotEmpty()
   @ApiProperty({ required: true, enum: Gender })
   gender: Gender;
+
+  @IsNotEmpty()
+  @IsDate()
+  @ApiProperty({ required: true })
+  birth_date: Date;
 
   @IsString()
   @IsNotEmpty()
