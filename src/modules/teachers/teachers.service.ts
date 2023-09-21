@@ -2,18 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { PrismaService } from 'src/databases/prisma/prisma.service';
-import { ConfigService } from '@nestjs/config';
 import { Teacher } from './models/teacher.model';
 
 @Injectable()
 export class TeachersService {
-  constructor(
-    private prismaService: PrismaService,
-    private readonly configService: ConfigService,
-  ) { }
+  constructor(private prismaService: PrismaService) {}
 
-  create(createTeacherDto: CreateTeacherDto) {
-    return 'This action adds a new teacher';
+  async create(createTeacherDto: CreateTeacherDto) {
+    return await this.prismaService.teachers.create({
+      data: {
+        ...createTeacherDto,
+        code: await this.generateTeacherCode(),
+      },
+    });
   }
 
   async findAll(): Promise<Teacher[]> {
@@ -29,5 +30,20 @@ export class TeachersService {
       where: { id },
       data: updateTeacherDto,
     });
+  }
+
+  async generateTeacherCode(): Promise<string> {
+    const runNumber = await this.prismaService.runnumber.findFirst({
+      where: { name: 'teacher_runnumber' },
+    });
+    let currentRunNumber: number = runNumber.current_number;
+    const teacherCode = `T${currentRunNumber.toString().padStart(7, '0')}`;
+    currentRunNumber++;
+
+    await this.prismaService.runnumber.update({
+      where: { id: runNumber.id },
+      data: { current_number: currentRunNumber },
+    });
+    return teacherCode;
   }
 }
