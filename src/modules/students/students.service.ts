@@ -43,8 +43,8 @@ export class StudentsService {
   }
 
   async generateStudentCode(): Promise<string> {
-    const runNumber = await this.prismaService.student_runnumber.findFirst({
-      where: { id: 1 },
+    const runNumber = await this.prismaService.runnumber.findFirst({
+      where: { name: 'student_runnumber' },
     });
     let currentRunNumber: number = runNumber.current_number;
     // Generate the student code by combining the run number and a constant prefix
@@ -54,8 +54,8 @@ export class StudentsService {
     currentRunNumber++;
 
     // Increment the run number for the next student
-    await this.prismaService.student_runnumber.update({
-      where: { id: 1 },
+    await this.prismaService.runnumber.update({
+      where: { id: runNumber.id },
       data: { current_number: currentRunNumber },
     });
     return studentCode;
