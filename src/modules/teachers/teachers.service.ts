@@ -8,7 +8,7 @@ import { Teacher } from './models/teacher.model';
 export class TeachersService {
   constructor(private prismaService: PrismaService) {}
 
-  async create(createTeacherDto: CreateTeacherDto) {
+  async create(createTeacherDto: CreateTeacherDto): Promise<Teacher> {
     return await this.prismaService.teachers.create({
       data: {
         ...createTeacherDto,
@@ -21,11 +21,14 @@ export class TeachersService {
     return await this.prismaService.teachers.findMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Teacher> {
     return await this.prismaService.teachers.findFirst({ where: { id } });
   }
 
-  async update(id: number, updateTeacherDto: UpdateTeacherDto) {
+  async update(
+    id: number,
+    updateTeacherDto: UpdateTeacherDto,
+  ): Promise<Teacher> {
     return await this.prismaService.teachers.update({
       where: { id },
       data: updateTeacherDto,
