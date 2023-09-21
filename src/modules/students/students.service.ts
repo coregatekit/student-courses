@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { PrismaService } from 'src/databases/prisma/prisma.service';
-import { Student } from './models/student.model';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -16,7 +15,7 @@ export class StudentsService {
     this.studentYear = this.configService.get<number>('CURRENT_STUDENT_YEAR');
   }
 
-  async create(createStudentDto: CreateStudentDto): Promise<Student> {
+  async create(createStudentDto: CreateStudentDto) {
     return await this.prismaService.students.create({
       data: {
         ...createStudentDto,
@@ -25,11 +24,11 @@ export class StudentsService {
     });
   }
 
-  async findAll(): Promise<Student[]> {
+  async findAll() {
     return await this.prismaService.students.findMany();
   }
 
-  async findOne(id: number): Promise<Student> {
+  async findOne(id: number) {
     return await this.prismaService.students.findFirst({ where: { id } });
   }
 

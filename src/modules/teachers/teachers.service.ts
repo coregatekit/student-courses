@@ -2,13 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { PrismaService } from 'src/databases/prisma/prisma.service';
-import { Teacher } from './models/teacher.model';
 
 @Injectable()
 export class TeachersService {
   constructor(private prismaService: PrismaService) {}
 
-  async create(createTeacherDto: CreateTeacherDto): Promise<Teacher> {
+  async create(createTeacherDto: CreateTeacherDto) {
     return await this.prismaService.teachers.create({
       data: {
         ...createTeacherDto,
@@ -17,18 +16,15 @@ export class TeachersService {
     });
   }
 
-  async findAll(): Promise<Teacher[]> {
+  async findAll() {
     return await this.prismaService.teachers.findMany();
   }
 
-  async findOne(id: number): Promise<Teacher> {
+  async findOne(id: number) {
     return await this.prismaService.teachers.findFirst({ where: { id } });
   }
 
-  async update(
-    id: number,
-    updateTeacherDto: UpdateTeacherDto,
-  ): Promise<Teacher> {
+  async update(id: number, updateTeacherDto: UpdateTeacherDto) {
     return await this.prismaService.teachers.update({
       where: { id },
       data: updateTeacherDto,
