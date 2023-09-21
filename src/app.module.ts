@@ -5,6 +5,7 @@ import { HealthModule } from './modules/health/health.module';
 import { ConfigModule } from '@nestjs/config';
 import { TeachersModule } from './modules/teachers/teachers.module';
 import { CoursesModule } from './modules/courses/courses.module';
+import { CourseCategoriesModule } from './modules/course-categories/course-categories.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CoursesModule } from './modules/courses/courses.module';
     StudentsModule,
     TeachersModule,
     CoursesModule,
+    CourseCategoriesModule,
   ],
   controllers: [],
   providers: [],
