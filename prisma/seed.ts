@@ -11,6 +11,11 @@ async function main() {
     name: 'teacher_runnumber',
     current_number: 1,
   } as Prisma.runnumberCreateInput;
+  const course = {
+    id: 3,
+    name: 'course_runnumber',
+    current_number: 1,
+  } as Prisma.runnumberCreateInput;
 
   const student_runnumber = await prisma.runnumber.create({
     data: student,
@@ -18,7 +23,10 @@ async function main() {
   const teacher_runnumber = await prisma.runnumber.create({
     data: teacher,
   });
-  console.log({ student_runnumber, teacher_runnumber });
+  const course_runnumber = await prisma.runnumber.create({
+    data: course,
+  });
+  console.log({ student_runnumber, teacher_runnumber, course_runnumber });
 }
 main()
   .then(async () => {
