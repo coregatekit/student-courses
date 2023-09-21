@@ -45,11 +45,13 @@ model teachers {
 }
 
 model courses {
-  id         Int      @id @default(autoincrement())
-  code       String   @unique @db.VarChar(6)
-  name       String   @db.VarChar(150)
-  teacher    teachers @relation(fields: [teacher_id], references: [id])
-  teacher_id Int
+  id              Int               @id @default(autoincrement())
+  code            String            @unique @db.VarChar(6)
+  name            String            @db.VarChar(150)
+  teacher         teachers          @relation(fields: [teacher_id], references: [id])
+  teacher_id      Int
+  course_category course_categories @relation(fields: [category_id], references: [id])
+  category_id     Int
 
   @@index([code, name])
 }
@@ -64,6 +66,14 @@ model students_courses {
   point      Int      @default(0)
 
   @@index([student_id, teacher_id])
+}
+
+model course_categories {
+  id      Int       @id
+  name    String    @unique @db.VarChar(50)
+  courses courses[]
+
+  @@index([name])
 }
 
 model runnumber {
