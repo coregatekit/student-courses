@@ -9,8 +9,10 @@ ALTER TABLE "courses" ADD COLUMN     "category_id" INTEGER NOT NULL;
 
 -- CreateTable
 CREATE TABLE "course_categories" (
-    "id" INTEGER NOT NULL,
-    "name" VARCHAR(50) NOT NULL,
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "short_name" TEXT NOT NULL,
+    "level" INTEGER NOT NULL,
 
     CONSTRAINT "course_categories_pkey" PRIMARY KEY ("id")
 );
@@ -19,7 +21,10 @@ CREATE TABLE "course_categories" (
 CREATE UNIQUE INDEX "course_categories_name_key" ON "course_categories"("name");
 
 -- CreateIndex
-CREATE INDEX "course_categories_name_idx" ON "course_categories"("name");
+CREATE UNIQUE INDEX "course_categories_short_name_key" ON "course_categories"("short_name");
+
+-- CreateIndex
+CREATE INDEX "course_categories_name_short_name_idx" ON "course_categories"("name", "short_name");
 
 -- AddForeignKey
 ALTER TABLE "courses" ADD CONSTRAINT "courses_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "course_categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

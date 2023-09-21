@@ -69,11 +69,13 @@ model students_courses {
 }
 
 model course_categories {
-  id      Int       @id @default(autoincrement())
-  name    String    @unique @db.VarChar(50)
-  courses courses[]
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  short_name String    @unique
+  level      Int
+  courses    courses[]
 
-  @@index([name])
+  @@index([name, short_name])
 }
 
 model runnumber {
