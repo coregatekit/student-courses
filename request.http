@@ -47,3 +47,13 @@ Content-Type: application/json
 ###
 GET {{host}}/teachers/1 HTTP/1.1
 Content-Type: application/json
+
+####################
+# Teachers
+####################
+POST {{host}}/courses/categories/create HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Science"
+}
