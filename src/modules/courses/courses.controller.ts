@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import { CreateCourseCategoryDto } from './dto/create-course-category.dto';
 
 @Controller('courses')
 export class CoursesController {
@@ -30,5 +39,14 @@ export class CoursesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.coursesService.remove(+id);
+  }
+
+  @Post('categories/create')
+  async createCategory(
+    @Body() createCourseCategoryDto: CreateCourseCategoryDto,
+  ) {
+    return await this.coursesService.createCourseCategory(
+      createCourseCategoryDto,
+    );
   }
 }
