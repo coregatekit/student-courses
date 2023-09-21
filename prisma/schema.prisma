@@ -21,9 +21,12 @@ model students {
   first_name       String             @db.VarChar(100)
   last_name        String             @db.VarChar(100)
   gender           Gender
+  birth_date       DateTime           @db.Timestamp()
   email            String             @db.VarChar(100)
   phone_number     String             @db.VarChar(10)
   bio              String?
+  created_at       DateTime           @default(now()) @db.Date
+  updated_at       DateTime           @updatedAt
   students_courses students_courses[]
 
   @@index([code, first_name])
@@ -35,9 +38,12 @@ model teachers {
   first_name       String             @db.VarChar(100)
   last_name        String             @db.VarChar(100)
   gender           Gender
+  birth_date       DateTime           @db.Timestamp()
   email            String?            @db.VarChar(100)
   phone_number     String?            @db.VarChar(10)
   bio              String?
+  created_at       DateTime           @default(now()) @db.Date
+  updated_at       DateTime           @updatedAt
   courses          courses[]
   students_courses students_courses[]
 
@@ -48,6 +54,8 @@ model courses {
   id              Int               @id @default(autoincrement())
   code            String            @unique @db.VarChar(6)
   name            String            @db.VarChar(150)
+  created_at      DateTime          @default(now()) @db.Date
+  updated_at      DateTime          @updatedAt
   teacher         teachers          @relation(fields: [teacher_id], references: [id])
   teacher_id      Int
   course_category course_categories @relation(fields: [category_id], references: [id])
@@ -64,6 +72,8 @@ model students_courses {
   teacher_id Int
   pass       Boolean  @default(false)
   point      Int      @default(0)
+  created_at DateTime @default(now()) @db.Date
+  updated_at DateTime @updatedAt
 
   @@index([student_id, teacher_id])
 }
@@ -73,6 +83,8 @@ model course_categories {
   name       String    @unique
   short_name String    @unique
   level      Int
+  created_at DateTime  @default(now()) @db.Date
+  updated_at DateTime  @updatedAt
   courses    courses[]
 
   @@index([name, short_name])
