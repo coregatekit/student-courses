@@ -10,7 +10,7 @@ export class CreateCourseCategoryDto {
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(50)
+  @MaxLength(3)
   @ApiProperty({ required: true })
   short_name: string;
 }

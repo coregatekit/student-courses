@@ -13,8 +13,4 @@ export class UpdateCourseDto {
   @IsNotEmpty()
   @IsNumber()
   teacher_id: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  category_id: number;
 }
