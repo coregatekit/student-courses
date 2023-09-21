@@ -25,3 +25,25 @@ Content-Type: application/json
 ###
 GET {{host}}/students/1 HTTP/1.1
 Content-Type: application/json
+
+####################
+# Teachers
+####################
+POST {{host}}/teachers HTTP/1.1
+Content-Type: application/json
+
+{
+    "first_name": "Karina",
+    "last_name": "Yoo",
+    "gender": "Female",
+    "email": "karina@coregate.dev",
+    "phone_number": "0647951994"
+}
+
+###
+GET {{host}}/teachers HTTP/1.1
+Content-Type: application/json
+
+###
+GET {{host}}/teachers/1 HTTP/1.1
+Content-Type: application/json
