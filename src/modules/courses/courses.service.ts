@@ -12,6 +12,7 @@ export class CoursesService {
       data: {
         name: createCourseDto.name,
         level: createCourseDto.level,
+        point: createCourseDto.point,
         code: await this.generateCourseCode(createCourseDto.category_id),
         teacher: {
           connect: {

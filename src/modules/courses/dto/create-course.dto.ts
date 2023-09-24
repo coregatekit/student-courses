@@ -16,6 +16,11 @@ export class CreateCourseDto {
   @IsNotEmpty()
   @IsNumber()
   @ApiProperty({ required: true })
+  point: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({ required: true })
   teacher_id: number;
 
   @IsNotEmpty()

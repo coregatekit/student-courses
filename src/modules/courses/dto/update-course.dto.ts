@@ -1,16 +1,20 @@
-import { IsNotEmpty, IsString, MaxLength, IsNumber } from 'class-validator';
+import { IsString, MaxLength, IsNumber, IsOptional } from 'class-validator';
 
 export class UpdateCourseDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MaxLength(150)
   name: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   level: number;
 
-  @IsNotEmpty()
+  @IsOptional()
+  @IsNumber()
+  point: number;
+
+  @IsOptional()
   @IsNumber()
   teacher_id: number;
 }
