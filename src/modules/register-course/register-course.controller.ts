@@ -1,15 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { RegisterCourseService } from './register-course.service';
 import { CreateRegisterCourseDto } from './dto/create-register-course.dto';
-import { UpdateRegisterCourseDto } from './dto/update-register-course.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('register-course')
@@ -30,14 +21,6 @@ export class RegisterCourseController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.registerCourseService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateRegisterCourseDto: UpdateRegisterCourseDto,
-  ) {
-    return this.registerCourseService.update(+id, updateRegisterCourseDto);
   }
 
   @Delete(':id')
