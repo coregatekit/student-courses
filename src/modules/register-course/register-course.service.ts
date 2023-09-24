@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateRegisterCourseDto } from './dto/create-register-course.dto';
 import { PrismaService } from 'src/databases/prisma/prisma.service';
 import { ERROR_MSG } from 'src/utils/error-message';
@@ -19,6 +23,19 @@ export class RegisterCourseService {
     });
     if (!course) {
       throw new NotFoundException(ERROR_MSG.COURSE_NOT_FOUND);
+    }
+    const registered = await this.prismaService.students_courses.findFirst({
+      where: {
+        student: {
+          code: student.code,
+        },
+        course: {
+          code: course.code,
+        },
+      },
+    });
+    if (registered) {
+      throw new ForbiddenException(ERROR_MSG.COURSE_ALREADY_REGISTERED);
     }
     return await this.prismaService.students_courses.create({
       data: {
