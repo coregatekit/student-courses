@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRegisterCourseDto } from './dto/create-register-course.dto';
-import { UpdateRegisterCourseDto } from './dto/update-register-course.dto';
 import { PrismaService } from 'src/databases/prisma/prisma.service';
 
 @Injectable()
 export class RegisterCourseService {
   constructor(private prismaService: PrismaService) {}
 
-  create(createRegisterCourseDto: CreateRegisterCourseDto) {
-    return 'This action adds a new registerCourse';
+  async create(createRegisterCourseDto: CreateRegisterCourseDto) {
+    return await this.prismaService.students_courses.create({
+      data: {
+        student: {
+          connect: {
+            id: createRegisterCourseDto.student_id,
+          },
+        },
+        course: {
+          connect: {
+            id: createRegisterCourseDto.course_id,
+          },
+        },
+      },
+    });
   }
 
   findAll() {
-    return `This action returns all registerCourse`;
+    return this.prismaService.students_courses.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} registerCourse`;
-  }
-
-  update(id: number, updateRegisterCourseDto: UpdateRegisterCourseDto) {
-    return `This action updates a #${id} registerCourse`;
+    return this.prismaService.students_courses.findFirst({ where: { id } });
   }
 
   remove(id: number) {
