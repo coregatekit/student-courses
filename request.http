@@ -32,8 +32,7 @@ PATCH {{host}}/students/1 HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "joekim@coregate.dev",
-    "phone_number": "0647951994"
+    "bio": "อิอิ"
 }
 
 ####################
@@ -64,7 +63,8 @@ PATCH {{host}}/teachers/1 HTTP/1.1
 Content-Type: application/json
 
 {
-    "phone_number": ""
+    "phone_number": "0989998888",
+    "bio": "สาวัดดีคา คารินา คา"
 }
 
 ####################
@@ -74,8 +74,8 @@ POST {{host}}/course-categories HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "Sport",
-    "short_name": "SPO"
+    "name": "Korean",
+    "short_name": "KOR"
 }
 
 ###
@@ -83,20 +83,19 @@ GET {{host}}/course-categories HTTP/1.1
 Content-Type: application/json
 
 ###
-GET {{host}}/course-categories/2 HTTP/1.1
+GET {{host}}/course-categories/3 HTTP/1.1
 Content-Type: application/json
 
 ###
-PATCH {{host}}/course-categories/1 HTTP/1.1
+PATCH {{host}}/course-categories/3 HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "",
-    "short_name": ""
+    "name": "Thai"
 }
 
 ###
-DELETE {{host}}/course-categories/1 HTTP/1.1
+DELETE {{host}}/course-categories/3 HTTP/1.1
 
 ####################
 # Courses
@@ -109,10 +108,11 @@ POST {{host}}/courses HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "Calculus II",
+    "name": "Korean II",
     "level": 2,
+    "point": 3,
     "teacher_id": 1,
-    "category_id": 3
+    "category_id": 5
 }
 
 ###
@@ -120,7 +120,7 @@ GET {{host}}/courses HTTP/1.1
 Content-Type: application/json
 
 ###
-GET  {{host}}/courses/1 HTTP/1.1
+GET  {{host}}/courses/4 HTTP/1.1
 Content-Type: application/json
 
 ###
@@ -128,21 +128,21 @@ PATCH {{host}}/courses/1 HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "Cal 2"
+    "point": 3
 }
 
 ###
-DELETE {{host}}/courses/1 HTTP/1.1
+DELETE {{host}}/courses/3 HTTP/1.1
 
 ####################
 # Register Courses
 ####################
 POST {{host}}/register-course HTTP/1.1
-Content-Type: : application/json
+Content-Type: application/json
 
 {
-    "student_id": 1,
-    "course_id": 1
+    "student_code": "",
+    "course_code": ""
 }
 
 ###
