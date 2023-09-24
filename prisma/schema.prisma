@@ -33,19 +33,18 @@ model students {
 }
 
 model teachers {
-  id               Int                @id @default(autoincrement())
-  code             String             @unique @db.VarChar(8)
-  first_name       String             @db.VarChar(100)
-  last_name        String             @db.VarChar(100)
-  gender           Gender
-  birth_date       DateTime           @db.Timestamp()
-  email            String?            @db.VarChar(100)
-  phone_number     String?            @db.VarChar(10)
-  bio              String?
-  created_at       DateTime           @default(now()) @db.Date
-  updated_at       DateTime           @updatedAt
-  courses          courses[]
-  students_courses students_courses[]
+  id           Int       @id @default(autoincrement())
+  code         String    @unique @db.VarChar(8)
+  first_name   String    @db.VarChar(100)
+  last_name    String    @db.VarChar(100)
+  gender       Gender
+  birth_date   DateTime  @db.Timestamp()
+  email        String?   @db.VarChar(100)
+  phone_number String?   @db.VarChar(10)
+  bio          String?
+  created_at   DateTime  @default(now()) @db.Date
+  updated_at   DateTime  @updatedAt
+  courses      courses[]
 
   @@index([code, first_name])
 }
@@ -67,17 +66,15 @@ model courses {
 }
 
 model students_courses {
-  id         Int       @id
-  student    students  @relation(fields: [student_id], references: [id])
+  id         Int      @id
+  student    students @relation(fields: [student_id], references: [id])
   student_id Int
-  course     courses   @relation(fields: [course_id], references: [id])
+  course     courses  @relation(fields: [course_id], references: [id])
   course_id  Int
-  pass       Boolean   @default(false)
-  point      Int       @default(0)
-  created_at DateTime  @default(now()) @db.Date
-  updated_at DateTime  @updatedAt
-  teachers   teachers? @relation(fields: [teachersId], references: [id])
-  teachersId Int?
+  pass       Boolean  @default(false)
+  point      Int      @default(0)
+  created_at DateTime @default(now()) @db.Date
+  updated_at DateTime @updatedAt
 
   @@index([student_id, course_id])
 }
