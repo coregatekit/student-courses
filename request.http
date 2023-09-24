@@ -27,6 +27,15 @@ Content-Type: application/json
 GET {{host}}/students/1 HTTP/1.1
 Content-Type: application/json
 
+###
+PATCH {{host}}/students/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "joekim@coregate.dev",
+    "phone_number": "0647951994"
+}
+
 ####################
 # Teachers
 ####################
@@ -50,6 +59,14 @@ Content-Type: application/json
 GET {{host}}/teachers/1 HTTP/1.1
 Content-Type: application/json
 
+###
+PATCH {{host}}/teachers/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "phone_number": ""
+}
+
 ####################
 # Course Categories
 ####################
@@ -68,6 +85,18 @@ Content-Type: application/json
 ###
 GET {{host}}/course-categories/2 HTTP/1.1
 Content-Type: application/json
+
+###
+PATCH {{host}}/course-categories/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "",
+    "short_name": ""
+}
+
+###
+DELETE {{host}}/course-categories/1 HTTP/1.1
 
 ####################
 # Courses
@@ -101,3 +130,26 @@ Content-Type: application/json
 {
     "name": "Cal 2"
 }
+
+###
+DELETE {{host}}/courses/1 HTTP/1.1
+
+####################
+# Register Courses
+####################
+POST {{host}}/register-course HTTP/1.1
+Content-Type: : application/json
+
+{
+    "student_id": 1,
+    "course_id": 1
+}
+
+###
+GET {{host}}/register-course HTTP/1.1
+
+###
+GET {{host}}/register-course/1 HTTP/1.1
+
+###
+DELETE {{host}}/register/course/1 HTTP/1.1
