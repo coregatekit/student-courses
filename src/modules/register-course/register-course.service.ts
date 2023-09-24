@@ -31,7 +31,12 @@ export class RegisterCourseService {
     return this.prismaService.students_courses.findFirst({ where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} registerCourse`;
+  async remove(id: number) {
+    return this.prismaService.students_courses.update({
+      where: { id },
+      data: {
+        remove_course_at: new Date().toISOString(),
+      },
+    });
   }
 }
