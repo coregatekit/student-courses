@@ -1,13 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { PrismaService } from 'src/databases/prisma/prisma.service';
+import { ERROR_MSG } from 'src/utils/error-message';
 
 @Injectable()
 export class TeachersService {
   constructor(private prismaService: PrismaService) {}
 
   async create(createTeacherDto: CreateTeacherDto) {
+    const teacher = await this.prismaService.teachers.findFirst({
+      where: {
+        first_name: createTeacherDto.first_name,
+        last_name: createTeacherDto.last_name,
+      },
+    });
+    if (teacher) {
+      throw new ForbiddenException(ERROR_MSG.TEACHER_ALREADY_REGISTER);
+    }
     return await this.prismaService.teachers.create({
       data: {
         ...createTeacherDto,
