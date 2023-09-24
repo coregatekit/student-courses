@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { PrismaService } from 'src/databases/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
+import { ERROR_MSG } from 'src/utils/error-message';
 
 @Injectable()
 export class StudentsService {
@@ -16,6 +17,15 @@ export class StudentsService {
   }
 
   async create(createStudentDto: CreateStudentDto) {
+    const student = await this.prismaService.students.findFirst({
+      where: {
+        first_name: createStudentDto.first_name,
+        last_name: createStudentDto.last_name,
+      },
+    });
+    if (student) {
+      throw new ForbiddenException(ERROR_MSG.STUDENT_ALREADY_REGISTER);
+    }
     return await this.prismaService.students.create({
       data: {
         ...createStudentDto,
